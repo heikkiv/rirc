@@ -23,6 +23,8 @@ end
 gem 'jquery-rails'
 
 gem 'redis', '3.0.2'
+gem "minitest", "~> 4.6.0"
+gem "minitest-reporters", "~> 0.14.7"
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
