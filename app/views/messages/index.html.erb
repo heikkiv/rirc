@@ -37,7 +37,7 @@
       $(document).ready(function() {
 
           function sendMessage() {
-              $.post('sendMessage', {channel: '#ep-dev', message: $('#messageText').val()}, function(resp) {
+              $.post('/messages', {sender: 'HeikkiV__', channel: '<%= @channel %>', body: $('#messageText').val()}, function(resp) {
                   window.location.reload(true);
               });
           }
@@ -114,9 +114,9 @@
               <b class="caret"></b>
             </a>
             <ul class="dropdown-menu">
-              <!--<g:each var="sender" status="s" in="${privateMessageSenders}">
-                <li class=""><a href="?from=${sender}">${sender}</a></li>
-              </g:each>-->
+              <% @private_message_senders.each do |sender| %>
+                  <li class=""><a href="?from=<%=sender%>"><%=sender%></a></li>
+              <% end %>
             </ul>
           </li>
           <li class="dropdown">
@@ -151,9 +151,9 @@
       <div id="privateMessages" class="well sidebar-nav hidden-phone">
         <ul class="nav nav-list">
           <li class="nav-header">Private messages</li>
-          <!--<g:each var="sender" status="s" in="${privateMessageSenders}">
-            <li class=""><a href="?from=${sender}">${sender}</a></li>
-          </g:each>-->
+          <% @private_message_senders.each do |sender| %>
+            <li class=""><a href="?from=<%=sender%>"><%=sender%></a></li>
+          <% end %>
         </ul>
       </div><!--/.well -->
 

@@ -14,10 +14,14 @@ class Message
   end
 
   def Message.list(channel, limit=100, offset=0)
-    messages = $redis.zrange("channel:#{channel}", offset, offset+limit)
+    messages = $redis.zrevrange("channel:#{channel}", offset, offset+limit)
     messages.map do |m|
       Message.new(JSON.parse(m))
     end
+  end
+
+  def Message.private_message_senders
+    $redis.smembers('private:message:senders')
   end
 
 end

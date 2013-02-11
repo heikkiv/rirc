@@ -35,4 +35,10 @@ class MessageTest < ActiveSupport::TestCase
     end
   end
 
+  test "list private message senders" do
+    senders = Message.private_message_senders
+    assert senders.length >= 0
+    assert senders[0] == 'HeikkiV__'
+  end
+
 end
