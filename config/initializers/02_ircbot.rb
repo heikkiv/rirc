@@ -15,6 +15,7 @@ $bot = Cinch::Bot.new do
     msg.sender = m.user.name
     msg.body = m.message
     Message.save(msg)
+    $redis.incr('channel:' + msg.channel + ':unreadmessagecount')
   end
 
 end
