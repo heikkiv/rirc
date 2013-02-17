@@ -114,8 +114,8 @@
               <b class="caret"></b>
             </a>
             <ul class="dropdown-menu">
-              <% @private_message_senders.each do |sender| %>
-                  <li class=""><a href="?from=<%=sender%>"><%=sender%></a></li>
+              <% @private_message_senders.each do |senderAndCount| %>
+                  <li class=""><a href="?channel=<%=senderAndCount[:sender]%>"><%=senderAndCount[:sender]%> <span class="pull-right"><%=(senderAndCount[:unread_messages] > 0) ? senderAndCount[:unread_messages] : '' %></a></li>
               <% end %>
             </ul>
           </li>
@@ -125,6 +125,9 @@
               <b class="caret"></b>
             </a>
             <ul class="dropdown-menu">
+              <% @users.each do |user| %>
+                  <li class=""><a href="?channel=<%=user.name%>"><%=user.name%></a></li>
+              <% end %>
               <!--<g:each var="user" status="s" in="${users}">
                 <li><a href="?from=${user.nick}">${user.nick}</a></li>
               </g:each>-->
@@ -143,16 +146,20 @@
       <div id="channels" class="well sidebar-nav">
         <ul class="nav nav-list">
           <li class="nav-header">Channels</li>
-          <li class=""><a href="?channel=%23ep-dev">#ep-dev</a></li>
-          <li class=""><a href="?channel=%23yougamers2">#yougamers2</a></li>
+          <li class="<%= (@channel == '#ep-dev') ? 'active' : '' %>">
+            <a href="?channel=%23ep-dev">#ep-dev <span class="pull-right"><%=(@unread_messages_ep_dev > 0) ? @unread_messages_ep_dev : '' %></span></a>
+          </li>
+          <li class="<%= (@channel == '#yougamers2') ? 'active' : '' %>">
+            <a href="?channel=%23yougamers2">#yougamers2 <span class="pull-right"><%=(@unread_messages_yougamers > 0) ? @unread_messages_yougamers : '' %></span></a>
+          </li>
         </ul>
       </div><!--/.well -->
 
       <div id="privateMessages" class="well sidebar-nav hidden-phone">
         <ul class="nav nav-list">
           <li class="nav-header">Private messages</li>
-          <% @private_message_senders.each do |sender| %>
-            <li class=""><a href="?from=<%=sender%>"><%=sender%></a></li>
+          <% @private_message_senders.each do |senderAndCount| %>
+            <li class=""><a href="?channel=<%=senderAndCount[:sender]%>"><%=senderAndCount[:sender]%> <span class="pull-right"><%=(senderAndCount[:unread_messages] > 0) ? senderAndCount[:unread_messages] : '' %></a></li>
           <% end %>
         </ul>
       </div><!--/.well -->
@@ -160,11 +167,9 @@
       <div id="users" class="well sidebar-nav">
         <ul class="nav nav-list">
           <li class="nav-header">Users</li>
-          <!--
-          <g:each var="user" status="s" in="${users}">
-            <li><a href="?from=${user.nick}">${user.nick}</a></li>
-          </g:each>
-          -->
+          <% @users.each do |user| %>
+              <li class=""><a href="?channel=<%=user.name%>"><%=user.name%></a></li>
+          <% end %>
         </ul>
       </div><!--/.well -->
 

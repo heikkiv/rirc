@@ -22,11 +22,6 @@ end
 
 gem 'jquery-rails'
 
-gem 'redis', '3.0.2'
-gem "minitest", "~> 4.6.0"
-gem "minitest-reporters", "~> 0.14.7"
-gem "cinch", "~> 2.0.4"
-
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 
@@ -41,3 +36,9 @@ gem "cinch", "~> 2.0.4"
 
 # To use debugger
 # gem 'debugger'
+
+gem 'redis', '3.0.2'
+gem "minitest", "~> 4.6.0"
+gem "minitest-reporters", "~> 0.14.7"
+gem "cinch", "~> 2.0.4"
+gem "rest-client", "~> 1.6.7"

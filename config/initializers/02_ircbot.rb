@@ -1,3 +1,7 @@
+require 'rest_client'
+
+NOTIFICATION_URL = 'http://boxcar.io/devices/providers/w0HwjplsXU2ujtJCi4U1/notifications'
+
 $bot = Cinch::Bot.new do
 
   configure do |c|
@@ -7,11 +11,19 @@ $bot = Cinch::Bot.new do
   end
 
   on :message do |m|
-    #m.reply "Hello, #{m.user.nick}"
-    #Channel('#rammer-bots').msg(client.get_latest_message_id)
     puts m.inspect
+    if m.channel?
+      puts "New message in channel #{m.channel.name}"
+      if m.message.downcase.index('heikkiv')
+        notification = "#{m.user.name}: #{m.message}"
+        RestClient.post(NOTIFICATION_URL, 'email' => 'heikki.verta@gmail.com', 'notification[message]' => notification)
+      end
+    else
+      puts "New private message from #{m.user.name}"
+      $redis.sadd('private:message:senders', m.user.name)
+    end
     msg = Message.new
-    msg.channel = m.channel.name
+    msg.channel = (m.channel) ? m.channel.name : m.user.name
     msg.sender = m.user.name
     msg.body = m.message
     Message.save(msg)
