@@ -6,7 +6,8 @@ class MessagesController < ApplicationController
 
   def index
     @channel = (params[:channel]) ? params[:channel] : '#ep-dev'
-    @messages = Message.list(@channel)
+    @since = (params[:since]) ? params[:since].to_f : 0;
+    @messages = Message.list(@channel, @since)
     @users = $bot.user_list
 
     unread_messages = $redis.get('channel:' + @channel + ':unreadmessagecount')

@@ -13,8 +13,8 @@ class Message
     $redis.zadd(key, Time.now.to_f, message.to_json)
   end
 
-  def Message.list(channel, limit=100, offset=0)
-    messages = $redis.zrevrange("channel:#{channel}", offset, offset+limit)
+  def Message.list(channel, since=0)
+    messages = $redis.zrevrangebyscore("channel:#{channel}", '+inf', since)
     messages.map do |m|
       Message.new(JSON.parse(m))
     end
