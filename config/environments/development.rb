@@ -35,6 +35,6 @@ Rirc::Application.configure do
   # Expands the lines which load the assets
   config.assets.debug = true
 
-  ENV['REDISTOGO_URL'] = 'redis://redistogo:a287366e2f76cd5be9e0a04a2a3cce9d@dory.redistogo.com:9560/'
+  ENV['REDISTOGO_URL'] = 'redis://localhost:6379/'
 
 end
