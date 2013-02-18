@@ -2,8 +2,6 @@ Rirc::Application.routes.draw do
 
   root :to => "home#index"
 
-  get "messageCount" => "home#message_count"
-
   get "home/index"
 
   resources :messages
