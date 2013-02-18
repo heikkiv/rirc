@@ -1,10 +1,7 @@
 class HomeController < ApplicationController
 
   def index
-  end
-
-  def message_count
-    render :json => { :count => 0 }
+    redirect_to :controller => "messages", :action => "index"
   end
 
 end
