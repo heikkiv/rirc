@@ -6,7 +6,7 @@ $bot = Cinch::Bot.new do
 
   configure do |c|
     c.nick = 'HeikkiV'
-    c.server = "irc.freenode.org"
+    c.server = "irc.atw-inter.net"
     c.channels = ["#ep-dev-test", "#ep-dev", "#yougamers2"]
   end
 
