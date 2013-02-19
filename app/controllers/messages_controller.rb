@@ -8,7 +8,10 @@ class MessagesController < ApplicationController
     @channel = (params[:channel]) ? params[:channel] : '#ep-dev'
     @since = (params[:since]) ? params[:since].to_f : 0;
     @messages = Message.list(@channel, @since)
-    @users = (@channel.start_with?('#')) ? $bot.Channel(@channel).users.keys : []
+    @users = []
+    if @channel.start_with?('#') && $bot.Channel(@channel)
+      @users = $bot.Channel(@channel).users.keys
+    end
 
     unread_messages = $redis.get('channel:' + @channel + ':unreadmessagecount')
     $redis.set('channel:' + @channel + ':unreadmessagecount', '0')
