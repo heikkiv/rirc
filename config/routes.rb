@@ -3,6 +3,7 @@ Rirc::Application.routes.draw do
   root :to => "home#index"
 
   get "home/index"
+  get "test" => "home#test"
 
   resources :messages
 
