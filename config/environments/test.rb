@@ -34,4 +34,9 @@ Rirc::Application.configure do
 
   # Print deprecation notices to the stderr
   config.active_support.deprecation = :stderr
+
+  config.irc_nick = "HeikkiV_"
+  config.irc_server = "irc.freenode.org"
+  config.irc_channels = ["#ep-dev-test"]
+
 end

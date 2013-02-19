@@ -64,4 +64,9 @@ Rirc::Application.configure do
   # Log the query plan for queries taking more than this (works
   # with SQLite, MySQL, and PostgreSQL)
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
+
+  config.irc_nick = "HeikkiV"
+  config.irc_server = "irc.atw-inter.net"
+  config.irc_channels = ["#ep-dev-test", "#ep-dev", "#yougamers2"]
+
 end

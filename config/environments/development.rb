@@ -35,6 +35,10 @@ Rirc::Application.configure do
   # Expands the lines which load the assets
   config.assets.debug = true
 
+  config.irc_nick = "HeikkiV_"
+  config.irc_server = "irc.freenode.org"
+  config.irc_channels = ["#ep-dev-test"]
+
   ENV['REDISTOGO_URL'] = 'redis://localhost:6379/'
 
 end

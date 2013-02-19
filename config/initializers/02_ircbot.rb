@@ -1,13 +1,14 @@
 require 'rest_client'
 
 NOTIFICATION_URL = 'http://boxcar.io/devices/providers/w0HwjplsXU2ujtJCi4U1/notifications'
+puts "Irc server: #{Rails.application.config.irc_server}"
 
 $bot = Cinch::Bot.new do
 
   configure do |c|
-    c.nick = 'HeikkiV'
-    c.server = "irc.atw-inter.net"
-    c.channels = ["#ep-dev-test", "#ep-dev", "#yougamers2"]
+    c.nick = Rails.application.config.irc_nick
+    c.server = Rails.application.config.irc_server
+    c.channels = Rails.application.config.irc_channels
   end
 
   on :message do |m|
