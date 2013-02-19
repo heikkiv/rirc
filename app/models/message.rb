@@ -15,6 +15,9 @@ class Message
 
   def Message.list(channel, since=0)
     messages = $redis.zrevrangebyscore("channel:#{channel}", '+inf', since)
+    if messages.length > 100
+      messages = messages.slice(0, 100)
+    end
     messages.map do |m|
       Message.new(JSON.parse(m))
     end
