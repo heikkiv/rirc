@@ -53,7 +53,7 @@
           });
 
           function checkNewMessages() {
-              $.getJSON('/messages?since=<%= Time.now.to_f %>&channel=<%=u @channel %>', function(resp) {
+              $.getJSON('/messages?no_reset=1&since=<%= Time.now.to_f %>&channel=<%=u @channel %>', function(resp) {
                   if(resp.length > 0) {
                       console.log('New messages');
                       $('#newMessagesNotice').show();
@@ -178,12 +178,15 @@
       </div>
 
       <div id="messages">
-        <% @messages.each do |message| %>
+        <% @messages.each_with_index do |message, index| %>
           <div class="row-fluid">
             <div class="span11">
               <small><%= message.created.to_formatted_s(:short) %></small> <strong><%= message.sender %></strong> <%= message.body %>
             </div>
           </div>
+          <% if (@currentChannelUnreadMessages == index + 1) %>
+            <hr/>
+          <% end %>
         <% end %>
       </div>
 

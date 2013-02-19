@@ -6,22 +6,22 @@ class MessagesController < ApplicationController
 
   def index
     @channel = (params[:channel]) ? params[:channel] : '#ep-dev'
-    @since = (params[:since]) ? params[:since].to_f : 0;
+    @since = (params[:since]) ? params[:since].to_f : 0
     @messages = Message.list(@channel, @since)
     @users = []
     if @channel.start_with?('#') && $bot.Channel(@channel)
       @users = $bot.Channel(@channel).users.keys
     end
 
-    unread_messages = $redis.get('channel:' + @channel + ':unreadmessagecount')
-    $redis.set('channel:' + @channel + ':unreadmessagecount', '0')
+    @currentChannelUnreadMessages = $redis.get('channel:' + @channel + ':unreadmessagecount').to_i
+    $redis.set('channel:' + @channel + ':unreadmessagecount', '0') unless params[:no_reset]
 
     @private_message_senders = get_private_message_senders
     @unread_messages_ep_dev = $redis.get('channel:#ep-dev:unreadmessagecount').to_i
     @unread_messages_ep_dev_test = $redis.get('channel:#ep-dev-test:unreadmessagecount').to_i
     @unread_messages_yougamers = $redis.get('channel:#yougamers2:unreadmessagecount').to_i
 
-    puts "#{unread_messages} unread messages in channel #{@channel}"
+    puts "#{@currentChannelUnreadMessages} unread messages in channel #{@channel}"
 
     respond_to do |format|
       format.html
