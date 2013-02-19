@@ -92,6 +92,7 @@
             <ul class="dropdown-menu">
               <li class="active"><a href="?channel=%23ep-dev">#ep-dev</a></li>
               <li class=""><a href="?channel=%23yougamers2">#yougamers2</a></li>
+              <li class=""><a href="?channel=%23ep-dev-test">#ep-dev-test</a></li>
             </ul>
           </li>
           <li class="dropdown">
@@ -134,6 +135,9 @@
           </li>
           <li class="<%= (@channel == '#yougamers2') ? 'active' : '' %>">
             <a href="?channel=%23yougamers2">#yougamers2 <span class="pull-right"><%=(@unread_messages_yougamers > 0) ? @unread_messages_yougamers : '' %></span></a>
+          </li>
+          <li class="<%= (@channel == '#ep-dev-test') ? 'active' : '' %>">
+            <a href="?channel=%ep-dev-test">#ep-dev-test<span class="pull-right"><%=(@unread_messages_ep_dev_test > 0) ? @unread_messages_ep_dev_test : '' %></span></a>
           </li>
         </ul>
       </div><!--/.well -->

@@ -15,6 +15,7 @@ class MessagesController < ApplicationController
 
     @private_message_senders = get_private_message_senders
     @unread_messages_ep_dev = $redis.get('channel:#ep-dev:unreadmessagecount').to_i
+    @unread_messages_ep_dev_test = $redis.get('channel:#ep-dev-test:unreadmessagecount').to_i
     @unread_messages_yougamers = $redis.get('channel:#yougamers2:unreadmessagecount').to_i
 
     puts "#{unread_messages} unread messages in channel #{@channel}"
