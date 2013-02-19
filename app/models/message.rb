@@ -13,7 +13,7 @@ class Message
     $redis.zadd(key, Time.now.to_f, message.to_json)
   end
 
-  def Message.list(channel, since=0)
+  def Message.list(channel, since=(Time.now - 60*60*24).to_f)
     messages = $redis.zrevrangebyscore("channel:#{channel}", '+inf', since)
     if messages.length > 100
       messages = messages.slice(0, 100)
