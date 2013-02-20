@@ -4,7 +4,7 @@ class Message
   def initialize(data={})
     @created = (data['created']) ? Time.parse(data['created']) : Time.now
     @sender = (data['sender']) ? data['sender'] : ''
-    @body = (data['body']) ? data['body'] : ''
+    @body = (data['body']) ? CGI.escapeHTML(data['body']) : ''
     @channel = (data['channel']) ? data['channel'] : ''
   end
 

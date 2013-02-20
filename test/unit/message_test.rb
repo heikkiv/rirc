@@ -20,9 +20,14 @@ class MessageTest < ActiveSupport::TestCase
     assert m.body == 'Hi'
   end
 
+  test "message body is html escaped" do
+    m = Message.new @body => '<hi> hoi'
+    assert_equal '', m.body
+  end
+
   test "saving" do
     m = Message.new
-    m.body = 'Hi'
+    m.body = 'Hi <yammer>'
     m.sender = 'test_user'
     m.channel = 'test_channel'
     Message.save(m)
@@ -44,7 +49,7 @@ class MessageTest < ActiveSupport::TestCase
   test "mark links in body" do
     m = Message.new
     m.body = 'check out http://google.com fool'
-    assert_equal "check out <a href='http://google.com'>http://google.com</> fool", m.body_with_html_links
+    assert_equal "check out <a href='http://google.com'>http://google.com</a> fool", m.body_with_html_links
   end
 
 end
