@@ -22,6 +22,8 @@ $bot = Cinch::Bot.new do
     else
       puts "New private message from #{m.user.name}"
       $redis.sadd('private:message:senders', m.user.name)
+      notification = "PM #{m.user.name}: #{m.message}"
+      RestClient.post(NOTIFICATION_URL, 'email' => 'heikki.verta@gmail.com', 'notification[message]' => notification)
     end
     msg = Message.new
     msg.channel = (m.channel) ? m.channel.name : m.user.name
