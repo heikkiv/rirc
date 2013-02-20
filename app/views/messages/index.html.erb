@@ -184,7 +184,7 @@
               <small><%= message.created.to_formatted_s(:short) %></small> <strong><%= message.sender %></strong> <%= message.body_with_html_links.html_safe %>
             </div>
           </div>
-          <% if (@currentChannelUnreadMessages == index + 1) %>
+          <% if (@current_channel_unread_messages == index + 1) %>
             <hr/>
           <% end %>
         <% end %>
