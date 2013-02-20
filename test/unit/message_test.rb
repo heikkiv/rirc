@@ -38,8 +38,13 @@ class MessageTest < ActiveSupport::TestCase
   test "list private message senders" do
     senders = Message.private_message_senders
     assert senders.length >= 0
-    puts senders
     assert senders.include?('HeikkiV__')
+  end
+
+  test "mark links in body" do
+    m = Message.new
+    m.body = 'check out http://google.com fool'
+    assert_equal "check out <a href='http://google.com'>http://google.com</> fool", m.body_with_html_links
   end
 
 end

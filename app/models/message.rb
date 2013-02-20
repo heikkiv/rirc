@@ -8,6 +8,18 @@ class Message
     @channel = (data['channel']) ? data['channel'] : ''
   end
 
+  def body_with_html_links
+    words = (@body) ? @body.split : []
+    words = words.map do |word|
+      if word.start_with?('http')
+        "<a href='#{word}'>#{word}</a>"
+      else
+        word
+      end
+    end
+    words.join(' ')
+  end
+
   def Message.save(message)
     key = "channel:#{message.channel}"
     $redis.zadd(key, Time.now.to_f, message.to_json)

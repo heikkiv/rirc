@@ -181,7 +181,7 @@
         <% @messages.each do |message| %>
           <div class="row-fluid">
             <div class="span11">
-              <small><%= message.created.to_formatted_s(:short) %></small> <strong><%= message.sender %></strong> <%= message.body %>
+              <small><%= message.created.to_formatted_s(:short) %></small> <strong><%= message.sender %></strong> <%= message.body_with_html_links.html_safe %>
             </div>
           </div>
         <% end %>
