@@ -56,15 +56,14 @@
               $.getJSON('/messages?no_reset=1&since=<%= Time.now.to_f %>&channel=<%=u @channel %>', function(resp) {
                   if(resp.length > 0) {
                       console.log('New messages');
+                      $('#newMessagesCount').html(resp.length);
                       $('#newMessagesNotice').show();
-                  } else {
-                    setTimeout(checkNewMessages, 5000);
                   }
               });
           }
 
           var messageCount = -1;
-          setTimeout(checkNewMessages, 5000);
+          setInterval(checkNewMessages, 5000);
 
       });
 
@@ -167,7 +166,7 @@
       <div id='newMessagesNotice' class="row-fluid" style="display: none">
         <div class="alert">
           <button type="button" class="close" data-dismiss="alert">×</button>
-          <a href="/messages?channel=<%=u @channel %>">New messages</a>
+          <a href="/messages?channel=<%=u @channel %>"><span id="newMessagesCount"></span> new messages</a>
         </div>
       </div>
 
