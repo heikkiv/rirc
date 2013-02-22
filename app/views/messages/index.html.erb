@@ -37,7 +37,7 @@
       $(document).ready(function() {
 
           function sendMessage() {
-              $.post('/messages', {sender: 'HeikkiV__', channel: '<%= @channel %>', body: $('#messageText').val()}, function(resp) {
+              $.post('/messages', {sender: '<%= Rails.application.config.irc_nick %>', channel: '<%= @channel %>', body: $('#messageText').val()}, function(resp) {
                   window.location.reload(true);
               });
           }
@@ -57,13 +57,14 @@
                   if(resp.length > 0) {
                       console.log('New messages');
                       $('#newMessagesNotice').show();
+                  } else {
+                    setTimeout(checkNewMessages, 5000);
                   }
-                  //console.log(resp);
               });
           }
 
           var messageCount = -1;
-          setInterval(checkNewMessages, 5000);
+          setTimeout(checkNewMessages, 5000);
 
       });
 
