@@ -66,7 +66,7 @@ Rirc::Application.configure do
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
 
   config.irc_nick = "HeikkiV"
-  config.irc_server = "irc.atw-inter.net"
+  config.irc_server = (ENV['IRC_SERVER']) ? ENV['IRC_SERVER'] : "irc.atw-inter.net"
   config.irc_channels = ["#ep-dev-test", "#ep-dev", "#yougamers2"]
 
 end
