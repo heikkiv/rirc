@@ -35,17 +35,6 @@
   <script src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
   <script type="text/JavaScript">
       $(document).ready(function() {
-
-          function submit() {
-              $.post('/login', {password: $('#messageText').val()}, function(resp) {
-                  window.location.assign('/messages');
-              });
-          }
-
-          $('#postForm').submit(function(event) {
-              event.preventDefault();
-              submit();
-          });
       });
   </script>
 
@@ -123,15 +112,15 @@
     <div class="span10">
 
       <% if flash[:notice] %>
-          <div class="row-fluid" style="display: none">
-            <div class="notice">
+          <div class="row-fluid">
+            <div class="alert alert-success">
               <button type="button" class="close" data-dismiss="alert">×</button>
               <%= flash[:notice] %>
             </div>
           </div>
       <% end %>
       <% if flash[:error] %>
-          <div class="row-fluid" style="display: none">
+          <div class="row-fluid">
             <div class="alert">
               <button type="button" class="close" data-dismiss="alert">×</button>
               <%= flash[:error] %>
@@ -140,10 +129,10 @@
       <% end %>
 
       <div class="row-fluid input-append">
-        <form id="postForm">
-          <input id="messageText" type="text" class="input-xxlarge">
-          <button id="postButton" class="btn" type="button">Login</button>
-        </form>
+        <%= form_tag do %>
+            <%= password_field_tag(:password) %>
+            <%= submit_tag("Login", :class => 'btn') %>
+        <% end %>
       </div>
 
     </div><!--/span-->
