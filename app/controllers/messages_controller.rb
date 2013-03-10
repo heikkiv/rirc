@@ -1,5 +1,7 @@
 class MessagesController < ApplicationController
 
+  before_filter :require_login
+
   def show
     render :json => {:id => params[:id]}
   end

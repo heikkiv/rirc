@@ -36,37 +36,17 @@
   <script type="text/JavaScript">
       $(document).ready(function() {
 
-          function sendMessage() {
-              $.post('/messages', {sender: '<%= Rails.application.config.irc_nick %>', channel: '<%= @channel %>', body: $('#messageText').val()}, function(resp) {
-                  window.location.reload(true);
+          function submit() {
+              $.post('/login', {password: $('#messageText').val()}, function(resp) {
+                  window.location.assign('/messages');
               });
           }
 
           $('#postForm').submit(function(event) {
               event.preventDefault();
-              sendMessage();
+              submit();
           });
-
-          $('#postButton').click(function(event) {
-              event.preventDefault();
-              sendMessage();
-          });
-
-          function checkNewMessages() {
-              $.getJSON('/messages?no_reset=1&since=<%= Time.now.to_f %>&channel=<%=u @channel %>', function(resp) {
-                  if(resp.length > 0) {
-                      console.log('New messages');
-                      $('#newMessagesCount').html(resp.length);
-                      $('#newMessagesNotice').show();
-                  }
-              });
-          }
-
-          var messageCount = -1;
-          setInterval(checkNewMessages, 5000);
-
       });
-
   </script>
 
 </head>
@@ -101,9 +81,6 @@
               <b class="caret"></b>
             </a>
             <ul class="dropdown-menu">
-              <% @private_message_senders.each do |senderAndCount| %>
-                  <li class=""><a href="?channel=<%=senderAndCount[:sender]%>"><%=senderAndCount[:sender]%> <span class="pull-right"><%=(senderAndCount[:unread_messages] > 0) ? senderAndCount[:unread_messages] : '' %></a></li>
-              <% end %>
             </ul>
           </li>
           <li class="dropdown">
@@ -112,9 +89,6 @@
               <b class="caret"></b>
             </a>
             <ul class="dropdown-menu">
-              <% @users.each do |user| %>
-                  <li class=""><a href="?channel=<%=user.name%>"><%=user.name%></a></li>
-              <% end %>
             </ul>
           </li>
         </ul>
@@ -130,33 +104,18 @@
       <div id="channels" class="well sidebar-nav">
         <ul class="nav nav-list">
           <li class="nav-header">Channels</li>
-          <li class="<%= (@channel == '#ep-dev') ? 'active' : '' %>">
-            <a href="?channel=%23ep-dev">#ep-dev <span class="pull-right"><%=(@unread_messages_ep_dev > 0) ? @unread_messages_ep_dev : '' %></span></a>
-          </li>
-          <li class="<%= (@channel == '#yougamers2') ? 'active' : '' %>">
-            <a href="?channel=%23yougamers2">#yougamers2 <span class="pull-right"><%=(@unread_messages_yougamers > 0) ? @unread_messages_yougamers : '' %></span></a>
-          </li>
-          <li class="<%= (@channel == '#ep-dev-test') ? 'active' : '' %>">
-            <a href="?channel=%23ep-dev-test">#ep-dev-test<span class="pull-right"><%=(@unread_messages_ep_dev_test > 0) ? @unread_messages_ep_dev_test : '' %></span></a>
-          </li>
         </ul>
       </div><!--/.well -->
 
       <div id="privateMessages" class="well sidebar-nav hidden-phone">
         <ul class="nav nav-list">
           <li class="nav-header">Private messages</li>
-          <% @private_message_senders.each do |senderAndCount| %>
-            <li class=""><a href="?channel=<%=senderAndCount[:sender]%>"><%=senderAndCount[:sender]%> <span class="pull-right"><%=(senderAndCount[:unread_messages] > 0) ? senderAndCount[:unread_messages] : '' %></a></li>
-          <% end %>
         </ul>
       </div><!--/.well -->
 
       <div id="users" class="well sidebar-nav">
         <ul class="nav nav-list">
           <li class="nav-header">Users</li>
-          <% @users.each do |user| %>
-              <li class=""><a href="?channel=<%=user.name%>"><%=user.name%></a></li>
-          <% end %>
         </ul>
       </div><!--/.well -->
 
@@ -171,32 +130,20 @@
             </div>
           </div>
       <% end %>
-
-      <div id='newMessagesNotice' class="row-fluid" style="display: none">
-        <div class="alert">
-          <button type="button" class="close" data-dismiss="alert">×</button>
-          <a href="/messages?channel=<%=u @channel %>"><span id="newMessagesCount"></span> new messages</a>
-        </div>
-      </div>
+      <% if flash[:error] %>
+          <div class="row-fluid" style="display: none">
+            <div class="alert">
+              <button type="button" class="close" data-dismiss="alert">×</button>
+              <%= flash[:error] %>
+            </div>
+          </div>
+      <% end %>
 
       <div class="row-fluid input-append">
         <form id="postForm">
           <input id="messageText" type="text" class="input-xxlarge">
-          <button id="postButton" class="btn" type="button">Post</button>
+          <button id="postButton" class="btn" type="button">Login</button>
         </form>
-      </div>
-
-      <div id="messages">
-        <% @messages.each_with_index do |message, index| %>
-          <div class="row-fluid">
-            <div class="span11">
-              <small><%= message.created.to_formatted_s(:short) %></small> <strong><%= message.sender %></strong> <%= message.body_with_html_links.html_safe %>
-            </div>
-          </div>
-          <% if (@current_channel_unread_messages == index + 1) %>
-            <hr/>
-          <% end %>
-        <% end %>
       </div>
 
     </div><!--/span-->
