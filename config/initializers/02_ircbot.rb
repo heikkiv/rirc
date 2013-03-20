@@ -13,7 +13,9 @@ $bot = Cinch::Bot.new do
 
   on :message do |m|
     puts m.inspect
-    if m.channel?
+    if m.message == 'VERSION'
+      return
+    elsif m.channel?
       puts "New message in channel #{m.channel.name}"
       if m.message.downcase.index('heikkiv')
         notification = "#{m.user.name}: #{m.message}"
