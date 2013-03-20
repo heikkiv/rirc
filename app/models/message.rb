@@ -20,6 +20,10 @@ class Message
     words.join(' ')
   end
 
+  def contains_mention
+    @body.downcase.index(Rails.application.config.irc_nick.downcase) != nil
+  end
+
   def Message.save(message)
     key = "channel:#{message.channel}"
     $redis.zadd(key, Time.now.to_f, message.to_json)

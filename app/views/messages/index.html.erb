@@ -176,7 +176,7 @@
         <% @messages.each_with_index do |message, index| %>
           <div class="row-fluid">
             <div class="span11">
-              <small><%= message.created.to_formatted_s(:short) %></small> <strong><%= message.sender %></strong> <%= message.body_with_html_links.html_safe %>
+              <small><%= message.created.to_formatted_s(:short) %></small> <strong><%= message.sender %></strong> <span class="<%= message.contains_mention ? "text-info" : "" %>"><%= message.body_with_html_links.html_safe %></span>
             </div>
           </div>
           <% if (@current_channel_unread_messages == index + 1) %>

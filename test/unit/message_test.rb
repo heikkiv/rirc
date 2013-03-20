@@ -52,4 +52,10 @@ class MessageTest < ActiveSupport::TestCase
     assert_equal "check out <a href='http://google.com'>http://google.com</a> fool", m.body_with_html_links
   end
 
+  test "contains mention" do
+    m = Message.new
+    m.body = 'Hei heikkiv_'
+    assert m.contains_mention
+  end
+
 end
