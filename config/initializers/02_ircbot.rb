@@ -17,7 +17,7 @@ $bot = Cinch::Bot.new do
       return
     elsif m.channel?
       puts "New message in channel #{m.channel.name}"
-      if m.message.downcase.index('heikkiv')
+      if m.message.downcase.index(Rails.application.config.irc_nick)
         notification = "#{m.user.name}: #{m.message}"
         RestClient.post(NOTIFICATION_URL, 'email' => 'heikki.verta@gmail.com', 'notification[message]' => notification)
       end
